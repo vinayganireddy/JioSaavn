@@ -1,0 +1,39 @@
+@import "./mixins.scss";
+
+.container {
+  @include flexBox(space-between, row);
+  padding: 1rem;
+  background-color: #f6f6f6;
+    box-shadow: 2px 0px 11px 2px rgba(0, 0, 0 , 0.3);
+  .logo {
+    @include flexBox(space-between, row);
+    .img {
+      max-width: 7.5rem;
+      margin-right: 1rem;
+    }
+    .link {
+      @include Rregular;
+      margin-right: 1rem;
+    }
+  }
+  .search {
+    .searchbox {
+      margin: 0 auto;
+      width: 25rem;
+      padding: 0.3rem;
+      border-radius: 1rem;
+      text-align: center;
+      transform: translateX(-20%)
+    }
+  }
+  .links {
+    @include flexBox(space-between, row);
+    .language {
+      @include Rregular;
+    }
+    .profile {
+      @include Rbold;
+      margin-left: 1rem;
+    }
+  }
+}

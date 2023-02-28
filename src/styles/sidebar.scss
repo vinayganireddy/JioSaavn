@@ -1,0 +1,47 @@
+@import "./mixins.scss";
+
+.sideBar-container{
+    position: fixed;
+    left: 0;
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 1rem;
+    width: 10rem;
+    padding-left: 2rem;
+    padding-bottom: 5rem;
+    .sideBar-subTitle {
+        @include Rregular;
+        color: #a0a0a0;
+        padding: 0.5rem 0;
+    }
+    .sideBar-list {
+        list-style: none;
+        .sideBar-list-item ,.sideBar-list-item span {
+            @include flexBox(flex-start,row);
+            @include Rregular;
+            font-size: 0.8rem;
+        }
+        .sideBar-list-item span {
+            padding-left: 0.5rem;
+        }
+        .sideBar-list-item {
+            margin: 0.3rem 0;
+        }
+    }
+
+    .sideBar-add-btn {
+        @include flexBox(flex-start,row);
+        border:none;
+        outline: none;
+        border-radius: 0.8rem;
+        background-color: #67e6dc;
+        padding: 0.2rem 0.6rem;
+        margin-top: 0.5rem;
+    }
+    .sideBar-add-btn span {
+        @include Rregular;
+        font-size: 0.8rem;
+        padding-left: 0.5rem;
+    }
+}

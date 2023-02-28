@@ -1,0 +1,22 @@
+@import "./mixins.scss";
+
+.player-container {
+    @include flexBox(space-between,row);
+    padding: 1.2rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #f0f0f0;
+    box-shadow: -2px 0px 11px 2px rgba(0, 0, 0 , 0.3);
+    .player-icons{
+        @include Rregular;
+        .player-icon {
+            font-size: 1.6rem;
+            margin: 0 .5rem;
+        }
+    }
+    .player-controls {
+        transform: translateX(40%);
+    }
+}
