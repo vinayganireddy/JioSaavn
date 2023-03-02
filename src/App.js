@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Player from "./components/player";
@@ -6,15 +7,17 @@ import SideBar from "./components/sideBar";
 import Home from "./pages/home";
 
 function App() {
+  
   return (
     <>
       <Navbar />
-      <SideBar/>
-      <Queue/>
+      <SideBar />
+      <Queue />
       <Routes>
-        <Route index element={<Home />} />
+        <Route index element={<Home/>} />
       </Routes>
       <Player />
+      
     </>
   );
 }

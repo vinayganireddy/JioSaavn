@@ -1,14 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TbRepeat, TbArrowsShuffle, TbDots } from "react-icons/tb";
 import { MdSkipPrevious, MdSkipNext, MdVolumeUp } from "react-icons/md";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaPlay, FaExpandAlt } from "react-icons/fa";
-import { useSelector,useDispatch } from "react-redux";
+import { IoMdAdd } from "react-icons/io";
+import { useSelector, useDispatch } from "react-redux";
 import "../styles/player.scss";
+import Modal from "./modal";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import { addPlaylist, addSongToPlaylist, deletePlaylist } from "../redux/slice/playlistSlice";
 import { selectCurrent } from "../redux/slice/currentPlayingSlice";
+import "../styles/sidebar.scss";
 export default function Player() {
+  const [openModal, setOpenModal] = useState(false);
   const song = useSelector((state) => state.CurrentPlaying.song);
   const currentIndex = useSelector((state) => state.CurrentPlaying.index);
   const queue = useSelector((state) => state.Queue.song);
+  const [show, setShow] = useState(false);
+  const [value, setValue] = useState("");
+  const playlists = useSelector((state) => state.Playlists.value);
+  const handleAdd = () => {
+    dispatch(addPlaylist(value));
+    setShow(false);
+    setValue("");
+  };
+  useEffect(() => {
+    localStorage.setItem("playlists", JSON.stringify(playlists));
+  }, [playlists]);
   const dispatch = useDispatch();
   let temp;
   if (queue && queue.length) {
@@ -20,24 +38,28 @@ export default function Player() {
 
   const handleNext = () => {
     let nextIndex = currentIndex++;
-    if(currentIndex === temp.length-1) {
+    if (currentIndex === temp.length - 1) {
       nextIndex = 0;
     }
-    dispatch(selectCurrent({
-      song: temp[nextIndex],
-      index: nextIndex
-    }))
-  }
+    dispatch(
+      selectCurrent({
+        song: temp[nextIndex],
+        index: nextIndex,
+      })
+    );
+  };
   const handlePrev = () => {
     let nextIndex = currentIndex--;
-    if(currentIndex === 0) {
-      nextIndex = temp.length-1;
+    if (currentIndex === 0) {
+      nextIndex = temp.length - 1;
     }
-    dispatch(selectCurrent({
-      song: temp[nextIndex],
-      index: nextIndex
-    }))
-  }
+    dispatch(
+      selectCurrent({
+        song: temp[nextIndex],
+        index: nextIndex,
+      })
+    );
+  };
 
   let url = "";
   if (song.downloadUrl) {
@@ -50,30 +72,87 @@ export default function Player() {
     if (audioRef.current && url) {
       audioRef.current.play();
 
-      setTimeout(()=>{
+      setTimeout(() => {
         handleNext();
-      },song.duration*1000)
-      
+      }, song.duration * 1000);
     }
   }, [url]);
 
   return (
     <div className="player-container">
-      <img className="player-img" src="http://placehold.it/50" />
+      <div>
+        {song.image && <img className="player-img" src={song.image[0].link} />}
+        <AiOutlineHeart />
+      </div>
       <audio ref={audioRef} src={url} />
       <div className="flexBox player-icons player-controls">
         <TbRepeat className="player-icon" />
         <MdSkipPrevious className="player-icon" onClick={handlePrev} />
-        <FaPlay className="player-icon"  onClick={() => audioRef.current.pause()}/>
-        <MdSkipNext className="player-icon" onClick={handleNext}/>
+        <FaPlay
+          className="player-icon"
+          onClick={() => audioRef.current.pause()}
+        />
+        <MdSkipNext className="player-icon" onClick={handleNext} />
         <TbArrowsShuffle className="player-icon" />
       </div>
       <div className="flexBox player-icons">
         <p>00:00/3:15</p>
         <TbDots className="player-icon" />
         <MdVolumeUp className="player-icon" />
-        <FaExpandAlt className="player-icon" />
+        <IoMdAdd
+          className="player-icon"
+          onClick={() => setOpenModal(!openModal)}
+        />
       </div>
+      <Modal
+        open={openModal}
+        setOpen={setOpenModal}
+        style={{ transform: "translateY(-90%)" }}
+      >
+        <div
+          style={{
+            backgroundColor: "#fff",
+            padding: "1rem",
+            borderRadius: "2rem",
+            zIndex: 2,
+            minHeight: "30rem",
+            minWidth: "30rem",
+            textAlign: "center",
+          }}
+        >
+          <button className="sideBar-add-btn" onClick={() => setShow(!show)}>
+            <IoMdAdd />
+            <span>New Playlist</span>
+          </button>
+          {show && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: "0.5rem",
+              }}
+            >
+              <input
+                style={{ maxWidth: "7rem", marginRight: "0.2rem" }}
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+              />
+              <button onClick={handleAdd}>Add</button>
+            </div>
+          )}
+          {playlists.map((e) => (
+            <>
+              <p className="sideBar-subTitle" key={e.id} onClick={()=>dispatch(addSongToPlaylist({playlistId:e.id, songId: song.id}))}>
+                {e.name}
+              </p>
+                <span onClick={() => dispatch(deletePlaylist(e.id))}>
+                  <IoMdCloseCircleOutline />
+                </span>
+            </>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 }

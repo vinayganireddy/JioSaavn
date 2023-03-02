@@ -1,25 +1,29 @@
-import React, { useState } from "react";
-import {IoMdAdd} from "react-icons/io";
-import {IoMusicalNotesOutline} from "react-icons/io5";
-import {VscHistory} from "react-icons/vsc";
-import {BsMusicNoteList} from "react-icons/bs";
-import {SiGooglepodcasts} from "react-icons/si";
-import {TfiMicrophoneAlt} from "react-icons/tfi";
+import React, { useEffect, useState } from "react";
+import { IoMdAdd } from "react-icons/io";
+import { IoMusicalNotesOutline } from "react-icons/io5";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import { VscHistory } from "react-icons/vsc";
+import { BsMusicNoteList } from "react-icons/bs";
+import { SiGooglepodcasts } from "react-icons/si";
+import { TfiMicrophoneAlt } from "react-icons/tfi";
 
 import "../styles/sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addPlaylist } from "../redux/slice/playlistSlice";
+import { addPlaylist, deletePlaylist } from "../redux/slice/playlistSlice";
 
 export default function SideBar() {
-  const [show,setShow] = useState(false);
-  const [value,setValue] = useState("");
-  const playlists = useSelector(state =>  state.Playlists.value);
+  const [show, setShow] = useState(false);
+  const [value, setValue] = useState("");
+  const playlists = useSelector((state) => state.Playlists.value);
   const dispatch = useDispatch();
-  const handleAdd = () =>{
+  const handleAdd = () => {
     dispatch(addPlaylist(value));
     setShow(false);
     setValue("");
-  }
+  };
+  useEffect(()=>{
+    localStorage.setItem("playlists",JSON.stringify(playlists))
+  },[playlists])
   return (
     <div className="sideBar-container">
       <p className="sideBar-subTitle">Browse</p>
@@ -34,34 +38,53 @@ export default function SideBar() {
       <p className="sideBar-subTitle">My Library</p>
       <ul className="sideBar-list">
         <li className="sideBar-list-item">
-            <VscHistory/>
-            <span>History</span>
+          <VscHistory />
+          <span>History</span>
         </li>
         <li className="sideBar-list-item">
-            <IoMusicalNotesOutline/>
-            <span>Music</span>
+          <IoMusicalNotesOutline />
+          <span>Music</span>
         </li>
         <li className="sideBar-list-item">
-            <BsMusicNoteList/>
-            <span>Albums</span>
+          <BsMusicNoteList />
+          <span>Albums</span>
         </li>
         <li className="sideBar-list-item">
-            <SiGooglepodcasts/>
-            <span>Podcasts</span>
+          <SiGooglepodcasts />
+          <span>Podcasts</span>
         </li>
         <li className="sideBar-list-item">
-            <TfiMicrophoneAlt/>
-            <span>Artists</span>
+          <TfiMicrophoneAlt />
+          <span>Artists</span>
         </li>
       </ul>
-      <button className="sideBar-add-btn" onClick={() => setShow(true)}>
-        <IoMdAdd/>
+      <button className="sideBar-add-btn" onClick={() => setShow(!show)}>
+        <IoMdAdd />
         <span>New Playlist</span>
       </button>
-      {show && <><input type="text" value={value} onChange={(e) => setValue(e.target.value)}/> <button onClick={handleAdd}>Add</button></>}
-      {playlists.map(e => <p className="sideBar-subTitle" key={e.id}>{e.name}</p>)}
+      {show && (
+        <div style={{ display: "flex", alignItems: "center",marginTop:"0.5rem" }}>
+          <input
+            style={{ maxWidth: "7rem",marginRight:"0.2rem" }}
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <button  onClick={handleAdd}>Add</button>
+        </div>
+      )}
+      {playlists.map((e) => (
+        <>
+          <p className="sideBar-subTitle" key={e.id}>
+            {e.name}
+            <span onClick={() => dispatch(deletePlaylist(e.id))}>
+              <IoMdCloseCircleOutline />
+            </span>
+          </p>
+        </>
+      ))}
       <ul className="sideBar-list">
-        <li className="sideBar-list-item">Starred Songs</li>
+        <li className="sideBar-list-item">Liked Songs</li>
       </ul>
     </div>
   );

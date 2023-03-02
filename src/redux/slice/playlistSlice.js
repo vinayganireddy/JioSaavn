@@ -10,7 +10,7 @@ const playlists = localStorage.getItem('playlists')
 const playlistSlice = createSlice({
     name: "Playlists",
     initialState: {
-        value: playlists || []
+        value: JSON.parse(playlists) || []
     },
     reducers: {
         addPlaylist: (state, action) => {
