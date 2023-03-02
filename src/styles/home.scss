@@ -1,0 +1,15 @@
+@import "./mixins.scss";
+
+.home-container {
+    margin-left: 13rem;
+    padding: 1rem;
+    padding-bottom: 6rem;
+    .home-module {
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+        gap: 1rem;
+    }
+    .home-title {
+        @include Rmedium;
+    }
+}

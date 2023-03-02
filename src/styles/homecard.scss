@@ -1,0 +1,19 @@
+@import "./mixins.scss";
+
+.homeCard-container {
+    .homeCard-card {
+        .homeCard-img {
+            border-radius: 0.5rem;
+            max-width: 10rem;
+        }
+        .homeCard-title {
+            @include Rregular;
+            @include textEllipse(10rem);
+        }
+        .homeCard-subTitle {
+            @include Rthin;
+            @include textEllipse(10rem);
+        }
+
+    }
+}

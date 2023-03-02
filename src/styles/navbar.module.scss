@@ -2,9 +2,11 @@
 
 .container {
   @include flexBox(space-between, row);
+  position: sticky;
+  top: 0;
   padding: 1rem;
   background-color: #f6f6f6;
-    box-shadow: 2px 0px 11px 2px rgba(0, 0, 0 , 0.3);
+  box-shadow: 2px 0px 11px 2px rgba(0, 0, 0, 0.3);
   .logo {
     @include flexBox(space-between, row);
     .img {
@@ -23,7 +25,7 @@
       padding: 0.3rem;
       border-radius: 1rem;
       text-align: center;
-      transform: translateX(-20%)
+      transform: translateX(-20%);
     }
   }
   .links {

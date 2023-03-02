@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Player from "./components/player";
+import Queue from "./components/queue";
 import SideBar from "./components/sideBar";
 import Home from "./pages/home";
 
@@ -9,9 +10,10 @@ function App() {
     <>
       <Navbar />
       <SideBar/>
-      {/* <Routes>
+      <Queue/>
+      <Routes>
         <Route index element={<Home />} />
-      </Routes> */}
+      </Routes>
       <Player />
     </>
   );

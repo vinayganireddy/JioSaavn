@@ -29,3 +29,10 @@
 .flexBox {
     @include flexBox(flex-start,row);
 }
+
+@mixin textEllipse($maxWidth) {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: $maxWidth;
+}
