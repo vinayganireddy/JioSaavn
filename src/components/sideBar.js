@@ -9,7 +9,7 @@ import { TfiMicrophoneAlt } from "react-icons/tfi";
 
 import "../styles/sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addPlaylist, deletePlaylist } from "../redux/slice/playlistSlice";
+import { addPlaylist, deletePlaylist, fetchPlaylistData } from "../redux/slice/playlistSlice";
 
 export default function SideBar() {
   const [show, setShow] = useState(false);
@@ -75,12 +75,12 @@ export default function SideBar() {
       )}
       {playlists.map((e) => (
         <>
-          <p className="sideBar-subTitle" key={e.id}>
+          <p className="sideBar-subTitle" key={e.id} onClick={()=>dispatch(fetchPlaylistData({playlist:e,dispatch}))}>
             {e.name}
+          </p>
             <span onClick={() => dispatch(deletePlaylist(e.id))}>
               <IoMdCloseCircleOutline />
             </span>
-          </p>
         </>
       ))}
       <ul className="sideBar-list">

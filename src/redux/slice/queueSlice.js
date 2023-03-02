@@ -9,7 +9,11 @@ const queueSlice = createSlice({
     status: "pending",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    addPlaylistToQueue: (state, action) => {
+      state.value = action.payload;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchDetails.pending, (state, action) => {
@@ -45,5 +49,7 @@ export const fetchDetails = createAsyncThunk(
     }
   }
 );
+
+export const {addPlaylistToQueue} = queueSlice.actions;
 
 export default queueSlice;
