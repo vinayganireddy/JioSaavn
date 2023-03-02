@@ -49,6 +49,11 @@ export default function Player() {
   useEffect(() => {
     if (audioRef.current && url) {
       audioRef.current.play();
+
+      setTimeout(()=>{
+        handleNext();
+      },song.duration*1000)
+      
     }
   }, [url]);
 

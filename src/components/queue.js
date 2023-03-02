@@ -4,6 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector,useDispatch } from "react-redux";
 import "../styles/queue.scss";
 import { selectCurrent } from "../redux/slice/currentPlayingSlice";
+import { v4 as uuid } from "uuid";
 export default function Queue() {
   const queue = useSelector((state) => state.Queue.value);
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function Queue() {
       <div className="queue-content">
         {data && data.map((e,index) => {
           return (
-            <div className="music-container">
+            <div className="music-container" key={uuid()}>
               <div className="music-title" onClick={()=>dispatch(selectCurrent({song:e,index}))}>
                 <img className="music-img" src={e.image[0].link} />
                 <div>
