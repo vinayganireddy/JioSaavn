@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const currentPlayingSlice = createSlice({
   name: "Current Playing",
   initialState: {
-    value: {},
+    song: {},
+    index: 0
   },
   reducers: {
     selectCurrent: (state, action) => {
-      state.value = action.payload;
+      state.song = action.payload.song;
+      state.index = action.payload.index;
     },
   },
 });

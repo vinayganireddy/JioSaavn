@@ -8,10 +8,10 @@ export default function Queue() {
   const queue = useSelector((state) => state.Queue.value);
   const dispatch = useDispatch();
   let data = [];
-  if (queue.length) {
+  if (queue && queue.length) {
     data = queue;
   }
-  if (queue.songs) {
+  if (queue && queue.songs) {
     data = queue.songs;
   }
   return (
@@ -25,10 +25,10 @@ export default function Queue() {
         </div>
       </div>
       <div className="queue-content">
-        {data.map((e) => {
+        {data && data.map((e,index) => {
           return (
-            <div className="music-container" onClick={()=>dispatch(selectCurrent(e))}>
-              <div className="music-title">
+            <div className="music-container">
+              <div className="music-title" onClick={()=>dispatch(selectCurrent({song:e,index}))}>
                 <img className="music-img" src={e.image[0].link} />
                 <div>
                   <p className="music-name">{e.name}</p>
