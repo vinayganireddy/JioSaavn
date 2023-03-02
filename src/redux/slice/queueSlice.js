@@ -1,5 +1,6 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import { selectCurrent } from "./currentPlayingSlice";
 
 const queueSlice = createSlice({
     name:"Queue",
@@ -22,10 +23,19 @@ const queueSlice = createSlice({
     })
 })
 
-export const fetchDetails = createAsyncThunk("Queue/fetch",async(url)=>{
+export const fetchDetails = createAsyncThunk("Queue/fetch",async({url,dispatch})=>{
     try {
         const {data} = await axios.get(url);
-        return data.data;
+        const queue = data.data;
+        let temp;
+        if(queue.length) {
+            temp = queue[0]
+          }
+          if(queue.songs) {
+            temp = queue.songs[0]
+          }
+        dispatch(selectCurrent(temp))
+        return queue;
     } catch (error) {
         return error.message
     }

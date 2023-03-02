@@ -12,7 +12,7 @@ export default function HomeCard({ data }) {
     if(data.type === "playlist") url = playlistUrl;
     if(data.type === "album") url = albumUrl;
     if(data.type === "song") url = songsUrl;
-    dispatch(fetchDetails(url));
+    dispatch(fetchDetails({url,dispatch}));
   };
   return (
     <div className="homeCard-container">

@@ -5,15 +5,9 @@ import { FaPlay, FaExpandAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import "../styles/player.scss";
 export default function Player() {
-  const queue = useSelector(state =>state.Queue.value);
-  console.log(queue);
-  let url = "";
-  if(queue.length) {
-    url = queue[0].downloadUrl[0].link
-  }
-  if(queue.songs) {
-    url = queue.songs[0].downloadUrl[0].link
-  }
+  const song = useSelector(state =>state.CurrentPlaying.value);
+  let url = song.downloadUrl[song.downloadUrl.length-1].link;
+ 
   return (
     <div className="player-container">
       <img className="player-img" src="http://placehold.it/50" />

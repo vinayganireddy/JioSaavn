@@ -1,9 +1,12 @@
 import React from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useSelector,useDispatch } from "react-redux";
 import "../styles/queue.scss";
+import { selectCurrent } from "../redux/slice/currentPlayingSlice";
 export default function Queue() {
   const queue = useSelector((state) => state.Queue.value);
+  const dispatch = useDispatch();
   let data = [];
   if (queue.length) {
     data = queue;
@@ -24,15 +27,22 @@ export default function Queue() {
       <div className="queue-content">
         {data.map((e) => {
           return (
-            <div>
-              <div>
-                <img src={e.image[0].link} />
-                <p>{e.name}</p>
-                <p>{e.primaryArtists}</p>
+            <div className="music-container" onClick={()=>dispatch(selectCurrent(e))}>
+              <div className="music-title">
+                <img className="music-img" src={e.image[0].link} />
+                <div>
+                  <p className="music-name">{e.name}</p>
+                  <p className="music-artist">{e.primaryArtists}</p>
+                </div>
               </div>
-              <div>
-                <HiDotsHorizontal className="queue-header-icon" />
-                <p>{Math.floor(e.duration/60)}:{(e.duration - (Math.floor(e.duration/60))*60).toFixed(2)}</p>
+              <div className="music-actions">
+                <AiOutlineHeart className="music-icon" />
+                <p className="music-time">
+                  {Math.floor(e.duration / 60)}:
+                  {
+                    (e.duration - Math.floor(e.duration / 60) * 60) > 10 ?(e.duration - Math.floor(e.duration / 60) * 60) : "0"+(e.duration - Math.floor(e.duration / 60) * 60)
+                  }
+                </p>
               </div>
             </div>
           );
