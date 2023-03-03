@@ -10,11 +10,13 @@ import { TfiMicrophoneAlt } from "react-icons/tfi";
 import "../styles/sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { addPlaylist, deletePlaylist, fetchPlaylistData } from "../redux/slice/playlistSlice";
+import { fetchLikedSongs } from "../redux/slice/likedSongsSlice";
 
 export default function SideBar() {
   const [show, setShow] = useState(false);
   const [value, setValue] = useState("");
   const playlists = useSelector((state) => state.Playlists.value);
+  const likedSongs = useSelector((state) =>  state.LikedSongs.songs)
   const dispatch = useDispatch();
   const handleAdd = () => {
     dispatch(addPlaylist(value));
@@ -84,7 +86,7 @@ export default function SideBar() {
         </>
       ))}
       <ul className="sideBar-list">
-        <li className="sideBar-list-item">Liked Songs</li>
+        <li className="sideBar-list-item" onClick={()=>dispatch(fetchLikedSongs({likedSongs,dispatch}))}>Liked Songs</li>
       </ul>
     </div>
   );
