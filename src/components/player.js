@@ -16,6 +16,7 @@ import {
 } from "../redux/slice/playlistSlice";
 import { selectCurrent } from "../redux/slice/currentPlayingSlice";
 import "../styles/sidebar.scss";
+import { dislikeSong, likeSong } from "../redux/slice/likedSongsSlice";
 export default function Player() {
   const [openModal, setOpenModal] = useState(false);
   const song = useSelector((state) => state.CurrentPlaying.song);
@@ -74,7 +75,7 @@ export default function Player() {
   let url = "";
   if (song.downloadUrl) {
     url = song.downloadUrl[song.downloadUrl.length - 1].link;
-    liked = likedSongs.filter(e => e === song.id);
+    liked = likedSongs.filter((e) => e === song.id);
   }
 
   useEffect(() => {
@@ -107,7 +108,19 @@ export default function Player() {
     <div className="player-container">
       <div>
         {song.image && <img className="player-img" src={song.image[0].link} />}
-        <AiOutlineHeart />
+        {!liked.length && (
+          <AiOutlineHeart
+            onClick={() => dispatch(likeSong({ songId: song.id }))}
+            className="music-icon"
+          />
+        )}
+        {liked.length !== 0 && (
+          <AiFillHeart
+            style={{ color: "red" }}
+            onClick={() => dispatch(dislikeSong({ songId: song.id }))}
+            className="music-icon"
+          />
+        )}
       </div>
       <audio ref={audioRef} src={url} />
       <div className="flexBox player-icons player-controls">
