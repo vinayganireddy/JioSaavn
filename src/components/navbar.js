@@ -1,9 +1,17 @@
 import React from "react";
 import { FaRegUserCircle } from "react-icons/fa";
-
+import { useDispatch } from "react-redux";
+import { fetchSearch } from "../redux/slice/searchResults";
 import styles from "../styles/navbar.module.scss";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const handleSearch = (event) => {
+    const searchTxt = event.target.value;
+    if(searchTxt.length > 3) {
+      dispatch(fetchSearch({searchTxt,dispatch}));
+    }
+  }
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -21,7 +29,11 @@ export default function Navbar() {
           type="text"
           className={styles.searchbox}
           placeholder="Search..."
+          onChange={handleSearch}
         />
+        <div className={styles.searchResults}>
+
+        </div>
       </div>
       <div className={styles.links}>
         <p className={styles.language}>English</p>

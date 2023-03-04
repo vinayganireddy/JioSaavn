@@ -19,6 +19,7 @@
     }
   }
   .search {
+    position: relative;
     .searchbox {
       margin: 0 auto;
       width: 25rem;
@@ -26,6 +27,19 @@
       border-radius: 1rem;
       text-align: center;
       transform: translateX(-20%);
+    }
+    .searchResults {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background-color: #dadada;
+      z-index: 2;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+      transform: translate(-20%,10%);
+      height: 20rem;
+      overflow-y: scroll;
+      overflow-x: hidden;
     }
   }
   .links {

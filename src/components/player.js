@@ -103,9 +103,28 @@ export default function Player() {
     if (parseFloat(secs) < 10) secs = "0" + secs;
     return mins + ":" + secs;
   };
+  const [hover,setHover] = useState({
+    currentTime: 0,
+    clientX:0,
+    show: false
+  })
+  const handleHover = (event) => {
+    const clientX= event.clientX;
+    const clientWidth = event.target.clientWidth;
+    const currentTime = ((clientX/clientWidth)*song.duration);
+    setHover({clientX,currentTime,show:true});
+  }
+  const handleSkip = () => {
+    audioRef.current.currentTime = hover.currentTime;
+    setCurrTime(hover.currentTime);
+  }
 
   return (
     <div className="player-container">
+      <div className="player-progress-container" onMouseLeave={()=>setHover({...hover, show:false})} onMouseEnter={handleHover} onClick={handleSkip}>
+        {hover.show && <p className="player-progress-tooltip" style={{left: hover.clientX}}>{formatTime(hover.currentTime)}</p>}
+        <span className="player-progress" style={{width: ((currTime/song.duration)*100)+"%"}}/>
+      </div>
       <div>
         {song.image && <img className="player-img" src={song.image[0].link} />}
         {!liked.length && (

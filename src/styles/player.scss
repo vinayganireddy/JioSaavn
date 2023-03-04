@@ -9,6 +9,29 @@
     right: 0;
     background-color: #f0f0f0;
     box-shadow: -2px 0px 11px 2px rgba(0, 0, 0 , 0.3);
+    .player-progress-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        max-height: 0.2rem;
+        width: 100vw;
+        .player-progress-tooltip {
+            position: absolute;
+            top: 0;
+            border-radius: 5px;
+            padding: 2px;
+            box-shadow: 1px 1px 10px 4px rgba(0, 0, 0 , 0.3);
+            transform: translateY(-110%);
+            z-index: 2;
+            background-color: #f0f0f0;
+        }
+        .player-progress {
+            background-color: red;
+            height: 0.2rem;
+            display: block;
+            width: 0;
+        }
+    }
     .player-icons{
         @include Rregular;
         .player-icon {
