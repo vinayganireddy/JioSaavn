@@ -40,6 +40,7 @@
       height: 20rem;
       overflow-y: scroll;
       overflow-x: hidden;
+      padding: 1rem;
     }
   }
   .links {
@@ -51,5 +52,20 @@
       @include Rbold;
       margin-left: 1rem;
     }
+  }
+}
+
+
+.searchResBar {
+  @include flexBox(flex-start,row);
+  align-items: baseline;
+  padding: 0.3rem;
+  .searchImg {
+    max-width: 3rem;
+  }
+  .searchResTxt {
+    @include Rregular;
+    margin-left: 0.3rem;
+    color: #272727;
   }
 }
