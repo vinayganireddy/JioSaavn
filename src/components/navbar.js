@@ -15,8 +15,11 @@ export default function Navbar() {
       dispatch(fetchSearch({ searchTxt, dispatch }));
     }
   };
-
-  const searchKeys = Object.keys(searchRes.data);
+    let searchKeys = [];
+    if(searchRes) {
+      searchKeys = Object.keys(searchRes.data);
+    } 
+  
   return (
     <div className={styles.container}>
       <div className={styles.logo}>

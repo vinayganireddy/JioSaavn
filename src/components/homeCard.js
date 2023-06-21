@@ -21,6 +21,7 @@ export default function HomeCard({ data }) {
         <p className="homeCard-title">{data.title}</p>
         <p className="homeCard-subTitle">{data.subtitle}</p>
       </div>
+      
     </div>
   );
 }
